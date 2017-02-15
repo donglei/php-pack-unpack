@@ -1,0 +1,413 @@
+syntax = "proto3";
+package proto.errornumber;
+
+enum ErrorNumber
+{
+    EC_SUCCESS = 0;
+    EC_DATA_ERROR = 1;                      // 数据错误
+    EC_INVALID_REQUEST = 2;                 // 非法请求
+    EC_CONFIG_ERROR = 3;                    // 配置错误
+
+    EC_MODULE_NOT_AVAILABLE = 50;           // 功能未开启
+
+    // 登录相关错误码
+    EC_TOKEN_INVALID = 100;                 // token 无效
+    EC_TOKEN_EXPIRED = 101;                 // TOKEN过期
+    EC_KICK_ON_ANOTHER_LOGIN = 102;         // 另外一个登录了, 被挤下线
+    EC_CREATE_ROLE_PROFESSION_ERROR = 103;  // 职业ID不合法
+    EC_CREATE_PLAYER_DUPLICATE_NAME = 104;  // 名字重复
+    EC_CREATE_PLAYER_ILLEGAL_NAME = 105;    // 名字非法
+    EC_CREATE_PLAYER_NAME_TOO_SHORT = 106;  // 名字太短
+    EC_CREATE_PLAYER_NAME_TOO_LONG = 107;   // 名字太长
+    EC_PLAYER_BANNED = 108;                 // 玩家被禁止登陆
+    EC_ACCOUNT_LOGIN_FAILED = 109;          // 玩家登陆失败
+    EC_LOGIN_SERVER_RESOLVE_FAILED = 110;   // 登录服务器未能解析
+    EC_LOGIN_SERVER_CONN_FAILED = 111;      // 登录服务器连接失败
+    EC_LOGIN_SERVER_VERIFY_TIMEOUT = 112;   // 登录服务器验证超时
+    EC_PLAYER_CREATED = 113;                // 角色已创建
+    EC_RECONNECT_PLAYER_NOT_EXIST = 114;    // 重练失败，需重新登录
+    EC_PLAYER_CREATED_FAILED = 115;         // 角色创建失败
+    EC_SWITCH_ROLE_INVALID_REQUEST = 116;   // 角色切换失败，需重新登录
+    EC_KICK_ON_GM = 117;										// GM后台踢下线
+
+    // 金钱相关错误码
+    EC_MONEY_INVALID_TYPE = 120;            // money_type无效
+    EC_MONEY_NAGITIVE_NUM = 121;            // 增减MONEY时候， 数值为负数
+    EC_NOT_ENOUGH_ITEM = 122;               // 没有足够的消耗物品
+
+    EC_MONEY_NOT_ENOUGH_COIN = 130;         // 金币不够
+    EC_MONEY_NOT_ENOUGH_YUANBAO = 131;      // 元宝不够
+    EC_MONEY_NOT_ENOUGH_LIQUAN = 132;       // 礼券不够
+    EC_MONEY_NOT_ENOUGH_SPIRIT = 133;       // 体力不够
+    EC_MONEY_NOT_ENOUGH_HUNLI = 134;        // 魂力不够
+    EC_MONEY_NOT_ENOUGH_EXP = 135;          // 经验不够
+    EC_MONEY_NOT_ENOUGH_HONOUR = 136;       // 荣誉不够
+    EC_MONEY_NOT_ENOUGH_GUILD_CONTRIBUTION = 138; // 公会贡献不够
+    // 占用到159， 预留30个exchange类型
+    EC_MONEY_NOT_ENOUGH_MONEY29 = 159;      // 礼券不够
+    EC_MONEY_NOT_ENOUGH = 160;              // 货币不够
+
+    EC_LEVEL_REACH_MAX_VALUE = 170;         // 等级达到满级
+
+
+    //**血统错误码**
+    EC_ANCESTRY_UNLOCK_ANCE_EXIST = 200;            // 该血统已被解锁
+    EC_ANCESTRY_UNLOCK_ANCE_ID_ERROR = 201;         // 该解锁血统不存在
+    EC_ANCESTRY_UNLOCK_PLAYERLEVEL = 202;           // 玩家等级不足
+    EC_ANCESTRY_UNLOCK_PRENOTEXIST = 203;           // 前置血统未解锁
+    EC_ANCESTRY_UNLOCK_PRELEVEL = 204;              // 前置血统等级不足
+    EC_ANCESTRY_ACTIVATE_ANCE_UNLOCK = 205;         // 激活血统未解锁
+    EC_ANCESTRY_UPGRADE_ANCE_UNLOCK = 206;          // 升级血统未解锁
+    EC_ANCESTRY_OPERATE_TYPE_ERROR = 207;           // 血统操作类别不合法
+    EC_ANCESTRY_UNLOCK_MATERIAL_NOT_ENOUGH = 208;   // 解锁血统需要材料不足
+    EC_ANCESTRY_NOT_UNLOCK = 209;                   // 血统还未解锁
+    EC_ANCESTRY_SKILL_ALREADRY_INUSE = 210;         // 血统技能已经在使用
+    EC_ANCESTRY_SKILL_NOT_INUSE = 211;              // 血统技能没在使用
+    EC_ANCESTRY_UPGRADE_FULL_LEVEL = 212;           // 血统已经满级
+    EC_ANCESTRY_SKILL_NUM_FULL = 213;               // 血统技能个数已满
+    EC_ANCESTRY_SKILL_CONTROL_FULL = 214;           // 血统技能掌控力已满
+    EC_ANCESTRY_ID_NOT_VALID = 215;                 // 血统技能无效
+    EC_ANCESTRY_UPGRADE_MATERIAL_NOT_ENOUGH = 216;  // 升级血统需要材料不足
+    EC_ANCESTRY_LEVEL_NOT_ENOUGH = 217;             // 血统等级不足
+
+
+    /******培养错误码******/
+    EC_TRAIN_RANGE_NOT_EXIST = 301;                 // 等级对应培养范围不存在
+    EC_TRAIN_SOUL_PROP_NOT_ENOUGH = 302;            // 灵魂培养道具不足
+    EC_TRAIN_GRAGON_YUANBAO_NOT_ENOUGH = 303;       // 龙魂培养元宝不足
+    EC_CONSUME_MATERIAL_NOT_ENOUGH = 304;		    // 培养所需材料不足
+
+    /******转职进阶错误码*****/
+    EC_TRANSFER_PROFESS_ID_ERROR = 401;             // 转职ID不合法
+    EC_TRANSFER_PROFESS_LEVEL_RANGE = 402;          // 转职所需等级不足
+
+    /******背包操作错误码*******/
+    EC_BAG_OPERATE_BAG_TYPE_ERROR = 501;            // 背包类型不合法
+    EC_BAG_OPERATE_BAG_ITEM_NUM_ERROR = 502;        // 扣除道具数量超过限制
+    EC_BAG_OPERATE_BAG_ITEM_NUM_NOT_ENOUGH = 503;   // 玩家道具数量不足
+    EC_BAG_OPERATE_BAG_ITEM_TID_ERROR = 504;        // 道具id不合法
+    EC_BAG_OPERATE_BAG_NOT_EXIST_ITEM_ID = 505;     // 不存在该道具ID
+    EC_BAG_OPERATE_BAG_ADD_ITEM_FAILED = 506;       // 道具添加失败
+    EC_BAG_OPERATE_BAG_COST_ITEM_FAILED = 507;      // 道具扣除失败
+    EC_BAG_IS_FULL = 508;                           // 背包满
+    EC_BAG_SIZE_NOT_ENOUGH = 509;                   // 背包空间不足
+    EC_BAG_OPERATE_EQUIP_CAN_NOT_DELETE = 510;      // 该装备处于装备状态，不能删除
+    EC_BAG_SLOT_LOCKED_SLOT_NOT_ENOUGH = 511;       // 处于锁定状态的槽位数量不足
+    EC_BAG_TMEP_BAG_NOT_EMPTY = 512;				        // 临时背包非空
+    EC_NOT_FOUND_ITEM = 513;                        // 没有找到该装备, 可能已经销魂
+    EC_ITEM_CAN_NOT_SALE = 514;                     // 该物品不可出售
+    EC_RECLIS_EXIST = 515;                          // 圣器已存在
+    EC_BAG_ITEMS_NOT_EXIST = 516;                   // 该物品不存在
+
+    /******装备锻炼错误码******/
+    EC_EQUIP_DEFAULT = 600;
+    EC_EQUIP_NOT_EXIST = 601;
+    EC_EQUIP_MATERIAL_NOT_ENOUGH = 602;
+    EC_EQUIP_COIN_NOT_ENOUGH = 603;
+    EC_EQUIP_YUANBAO_NOT_ENOUGH = 604;
+    EC_EQUIP_SOCKET_NOT_ENOUGH = 605;
+    EC_EQUIP_ENHANT_LEVEL_NOT_ENOUGH = 606;
+    EC_EQUIP_ALREADY_EQUIPED = 607;                 // 物品已经装备
+    EC_EQUIP_ENHANT_TYPE_NOT_MATCH = 608;
+    EC_EQUIP_TYPE_NOT_MATCH =609;		            // 装备类型与职业不符
+    EC_EQUIP_TYPE_NOT_MATCH_PRO_LIMIT =610;	        // 装备类型与职业不符,职业特别限制
+    EC_EQUIP_LEVEL_NOT_REACH = 611;
+
+
+    EC_EQUIP_HAS_REACH_TOP_LEVEL  = 612;
+
+    EC_EQUIP_CAN_NOT_OPEN_SOCKET = 613;
+    EC_EQUIP_INLAY_GEM_TEMPLATE_NOT_EXIST = 614;
+    EC_EQUIP_INLAY_GEM_TYPE_NOT_MATCH = 615;
+    EC_EQUIP_INLAY_SOCKET_INDEX_INVALID = 616;          // 该孔位不可镶嵌
+
+    EC_EQUIP_STRENGHTEN_PROTECT_MATERIAL_NOT_ENOUGH = 617;
+    EC_EQUIP_UNINLAY_SOCKET_INDEX_INVALID = 618;        // 该孔不可拆除
+    EC_PERPETUAL_EQUIP_CAN_NOT_UNEQUIP = 619;           // 永久性装备不可以拆卸
+	  EC_EQUIP_STRENGTH_OF_ATTRIBUTE_REACH_TOP_LEVEL = 620;	// 装备属性强化到最大等级
+	  EC_EQUIP_PLAYER_LEVEL_LIMITED = 621;                // 玩家等级不足
+	  EC_EQUIP_PLAYER_VIP_LEVEL_LIMITED = 622;            // 玩家vip等级不足
+	  EC_EQUIP_NOT_EQUIP_THE_SAME_PERPETUAL_EQUPMENT = 623; // 不能装备相同的特殊装备
+	  EC_EQUIP_STRENGTH_LEVEL_NOT_REACH = 624;                  // 强化等级未达到指定等级
+	  EC_EQUIP_STRENGTH_LEVEL_NO_MORE_THAN_PLAYER_LEVEL = 625;  // 强化等级不能超过角色等级
+	  EC_EQUIP_RECLIS_CAN_NOT_BE_SWALLOW = 626;                 // 该类型圣器不可被吞噬
+	  EC_EQUIP_RECLIS_SWALLOW_ITEMS_NOT_ENOUGH = 627;           // 圣器强化吞噬物品不足
+	  EC_EQUIP_RECLIS_SWALLOW_ITEMS_UNVALID = 628;              // 圣器强化所选材料类型非法
+	  EC_RELICS_MAX_CLASS_LIMIT = 629;                          // 圣器已达最大阶级
+
+
+    /****** 商城操作错误码 ******/
+    EC_MALL_ACTIVITY_OUT_TIME = 701;                        // 活动过期
+    EC_MALL_ACTIVITY_SELL_OUT = 702;                        // 商品已售完
+
+    /****** 技能操作错误码 ******/
+    EC_SKILL_PRE_SKILL_NOT_UNLOCK = 703;                    // 前置技能未解锁
+    EC_SKILL_PRE_SKILL_LEV_NOT_ENOUGH = 704;                // 前置技能等级未达到
+    EC_SKILL_PLAYER_LEV_NOT_ENOUGH = 705;                   // 技能解锁-玩家等级不足
+    EC_SKILL_SKILL_UNLOCKED = 706;                          // 该技能已经解锁
+    EC_SKILL_UPGRADE_SKILL_TYPE_ERROR = 707;                // 该种技能不能升级
+    EC_SKILL_CONSUME_ITEM_NOT_ENOUGH = 708;                 // 道具消耗不足
+    EC_SKILL_SKILL_ACTIVATED = 709;                         // 该技能已经激活
+    EC_SKILL_ININIAL_SKILL_LOCK = 710;                      // 所属主动技能未解锁
+    EC_SKILL_REACH_MAX_LEVEL = 711;                         // 技能达到满级
+    EC_SKILL_UNLOCK_PROFESSION_ERROR = 712;				          // 解锁技能职业不符
+    EC_SKILL_UNLOCK_NUMBER_OUT_RANGE = 713;				          // 解锁技能个数达最大值
+    EC_SKILL_LOCKED_UNABLE_UPGRADE = 714;                   // 技能未解锁，不能升级
+    EC_SKILL_INITIAL_SKILL_UNACTIVATE = 715;                // 主动技能未激活
+    EC_SKILL_UPGRADE_ROLE_LEVEL_LIMIT = 716;                // 技能升级 - 主角等级不足
+
+    /******血战buffer错误码******/
+    EC_XUEZHAN_DEFAULT = 800;
+    EC_XUEZHAN_BUFFER_NOT_EXIST = 801;
+    EC_XUEZHAN_BUFFER_MATERIAL_NOT_ENOUGH = 802;
+
+    /******合成物品错误码******/
+    EC_COMPOSE_DEFAULT = 900;
+    EC_COMPOSE_MATERIAL_NOT_ENOUGH = 901;                   // 合成需要的材料不足
+    EC_COMPOSE_POS_NOT_ENOUGH = 902;                        // 合成需要背包空间不足
+
+    /****** 角色相关错误码 *********/
+    EC_PLAYER_LEVEL_LIMIT = 1003;                           // 玩家等级不够, 不能使用功能
+    EC_PLAYER_VIP_LEVEL_LIMIT = 1004;                       // 玩家vip等级不够, 不能使用功能
+    EC_LIMIT_COUNT_REACH_MAX = 1005;                        // 玩家 限制次数用光
+    EC_PROFESSION_UPGRADE_1_FLAG_NOT_OPEN = 1006;           // 玩家不能转职, 任务没有完成
+    EC_PROFESSION_UPGRADE_2_FLAG_NOT_OPEN = 1007;           // 玩家不能进阶, 任务没有完成
+    EC_NOT_FOUND_PLAYER = 1008;                             // 没有找到玩家
+    EC_STILL_ON_COOLDOWN = 1009;                            // 还在冷却中
+
+    /****** 道具使用 相关错误码 *********/
+    EC_USEPROP_DEFAULT = 1100;
+    EC_USEPROP_NOT_EXIST = 1101;
+    EC_USEPROP_TEMPLATE_NOT_EXIST = 1102;
+    EC_USEPROP_TYPE_NOT_PROP = 1103;
+    EC_USEPROP_ADD_HP_ERR = 1104;
+    EC_USEPROP_ADD_SPIRIT_ERR = 1105;
+    EC_USEPROP_EAT_DRUG_ERR = 1106;
+    EC_USEPROP_ADD_BUFFER = 1107;
+    EC_USEPROP_ADD_HUNLI_ERR = 1108;
+
+    /******* 连续登陆礼包 ********/
+    EC_CONTINUE_LOGIN_PRIZE_DAYS_NOT_ENOUGH = 1200;     // 连续登陆天数不够
+    EC_CONTINUE_LOGIN_PRIZE_ALREADY_GOT = 1201;         // 连续登陆礼包已领取
+
+	/******* 世界BOSS错误 ********/
+	EC_WORLDBOSS_ERROR_TIME	 = 1250;					// 世界BOSS冷却
+	EC_WORLDBOSS_ERROR_NOT_OPEN	 = 1251;				// 世界BOSS未开启
+
+    /******* 任务相关错误码 *************/
+    EC_QUEST_ALEADY_ACCEPTED = 1300;                    // 任务已经接受
+    EC_QUEST_PREV_NOT_FINISHED = 1301;                  // 前置任务没有完成
+    EC_QUEST_NOT_ACCEPTABLE = 1302;                     // 任务不可接受
+    EC_QUEST_NOT_FINISHABLE = 1303;                     // 任务不可完成
+    EC_QUEST_NOT_CANCELABLE = 1304;                     // 任务不可取消
+    EC_QUEST_PRIZE_NOT_EXIST = 1305;                    // 该任务礼包不存在
+    EC_QUEST_ACCEPT_PROFESSION_LIMIT = 1306;            // 职业限制不能接取任务
+
+    /****** 战斗场景错误码 *************/
+    EC_COMBAT_SCENE_NON_VIP = 1400;                     // 非VIP玩家
+    EC_COMBAT_SCENE_ACTION_DATA_WRONG = 1401;           // 战斗数据格式错误
+    EC_COMBAT_SCENE_LOTTERY_DRAWED_BY_NON_VIP = 1402;   // 已经抽取过普通抽奖
+    EC_COMBAT_SCENE_LOTTERY_DRAWED_BY_VIP = 1403;       // VIP抽奖超限
+    EC_DUNGEON_NOT_OPENED = 1404;                       // 副本还没有开启, 无法进入
+    EC_DUNGEON_NOT_SUCCESS_FINISHED = 1405;             // 副本战斗失败
+    EC_COMBAT_DROP_ITEM_TID_WRONG = 1406;				// 副本怪物掉落验证，tid不匹配
+    EC_COMBAT_DROP_ITEM_NUM_WRONG = 1407;				// 副本怪物掉落验证，num不匹配
+    EC_COMBAT_DROP_ITEM_INDEX_WRONG = 1408;				// 副本怪物掉落验证，index非法
+    EC_COMBAT_PICK_UP_ITEM_INDEX_WRONG = 1409;			// 副本物品拾取验证，index非法
+    EC_COMBAT_PICK_UP_ITEM_STATUS_WRONG = 1410;			// 副本物品拾取验证，status非法
+    EC_COMBAT_MONSTER_DIE_INDEX_WRONG = 1411;			// 副本怪物死亡验证，index非法
+    EC_COMBAT_MONSTER_DIE_STATUS_WRONG = 1412;			// 副本怪物死亡验证，staus非法
+    EC_COMBAT_FINISH_PARA_DATA_WRONG = 1413;			// 副本结束，参数数据非法
+    EC_COMBAT_FINISH_DUNGEON_STATUS_WRONG = 1414;		// 副本结束，副本status非法
+    EC_COMBAT_FINISH_BOSS_STATUS_WRONG = 1415;			// 副本结束，boss status非法
+    EC_COMABT_FINISH_MONSTER_STATUS_WRONG = 1416;		// 副本结束，monster status非法
+    EC_COMBAT_BOSS_BEHEADED_BOSS_INDEX_WRONG = 1417;	// boss斩杀验证 index非法
+    EC_COMBAT_BOSS_BEHEADED_NUMBER_OUT_LIMIT = 1418;	// boss斩杀验证 斩杀number超限
+    EC_COMBAT_PLAYER_DUNGEON_INSTANCE_NOT_NULL = 1419; 	// 玩家已在战斗中
+    EC_COMBAT_PLAYER_IS_ALREADY_IN_TEAM = 1420;			// 玩家已经在队伍中
+    EC_COMBAT_PLAYER_DIE_STATUS_ERROR = 1421;           // 玩家死亡状态错误
+    EC_COMBAT_PLAYER_DIED = 1422;                       // 玩家已经死亡
+    EC_COMBAT_DUNGEON_CAN_NOT_SWEEP = 1423;             // 该副本不可扫荡
+
+
+
+    /****** 竞技场挑战错误码 ***********/
+    EC_ARENA_CHALLENGE_TIME_OUT = 1501;      				// 挑战超时
+    EC_ARENA_RANKING_PRIZE_GOT = 1502;  					// 竞技场排名奖励已经领取完毕
+    EC_ARENA_NOT_OPEN = 1503;								// 竞技场模块未开启
+    EC_ARENA_RANKING_UPDATE = 1504;							// 竞技场排名更新
+    EC_ARENA_CHALLENGE_RANKING_NOT_IN_MATCH_PLAYERS = 1505; // 挑战的排名非匹配的排名
+    EC_ARENA_MATCH_PLAYERS_NOT_EXIST = 1506;                // 无匹配玩家
+    EC_ARENA_CHALLENGE_PLAYER_DATA_CHANGED = 1507;          // 被挑战玩家排名发生变化
+    EC_ARENA_PLAYER_IS_CHALLENGING = 1508;                  // 被挑战玩家正在挑战
+    EC_ARENA_PLAYER_BEEN_CHALLENEGED = 1509;                // 自己正在被挑战
+    EC_ARENA_PLAYER_RANKING_CHANGED = 1510;                 // 自己的排名已发生变化
+
+    /****** 血战 错误码 *************/
+    EC_XUEZHAN_BUY_MATERIAL_NOT_ENOUGH = 1600;              // 购买buff材料不足
+    EC_XUEZHAN_NOT_PERMIT_TIMES = 1601;		                // 已无挑战次数
+    EC_XUEZHAN_STARS_NOT_ENOUGH = 1602;                     // 星级不足
+	EC_XUEZHAN_STARS_CANT_OPEN_REWARD = 1603;               // 无法领取奖励
+
+	/****** 屠龙夺宝 错误码 *************/
+	EC_TULONG_DRAGON_HP_ERROR = 1650;						// 无法屠龙
+	EC_TULONG_DRAGON_DEAD = 1651;							// 龙飞走了
+
+    //======================== 公会 ======================//
+    EC_ALREADY_IN_GUILD = 1700;                         // 自己已经在公会中
+    EC_TARGET_ALREADY_IN_GUILD = 1701;                  // 对方已经在公会中
+    EC_NOT_IN_GUILD = 1702;                             // 没有加入公会
+    EC_REACH_MAX_GUILD_MEMBER_NUM = 1703;               // 公会已满
+    EC_GUILD_NO_PRIVILEGE = 1704;                       // 公会权限不够
+    EC_NOT_FOUND_GUILD_APPLY = 1705;                    // 没有找到该公会申请
+    EC_ALREADY_APPLY_GUILD = 1706;                      // 已经申请工会
+    EC_NO_PRESIDENT_QUIT_WITH_MEMBER = 1707;            // 公会还有其他成员, 会长不能离开
+    EC_GUILD_PURCHASE_COUNT_OUT_OF_LIMIT = 1708;        // 公会购买次数超限
+    EC_GUILD_RANDOM_SHOP_PURCHASE_ITEM_FLAG_ERROR = 1709; // 公会随机商店物品已出售
+    EC_GUILD_FIXED_SHOP_GUILD_LEVEL_LIMTED = 1710;        // 公会等级不足，固定商店中物品无法购买
+    EC_GUILD_RANDOM_SHOP_GUILD_LEVEL_LIMTED = 1711;       // 公会等级不足，随机商店中物品无法购买
+
+    EC_GUILD_CREATE_DUPLICATE_NAME = 1712;                  // 创建公会 名字重复
+    EC_GUILD_CREATE_ILLEGAL_NAME = 1713;                    // 创建公会 名字非法
+    EC_GUILD_CREATE_NAME_TOO_SHORT = 1714;                  // 创建公会 名字太短
+    EC_GUILD_CREATE_NAME_TOO_LONG = 1715;                   // 创建公会 名字太长
+
+    /*********斗神台 错误码*************/
+    EC_FIGHT_GOD_SQUARE_NOT_OPEN = 1800;                    // 斗神台未开放
+    EC_FIGHT_GOD_SQUARE_SCORE_NOT_ENOUGH = 1801;            // 积分不足
+    EC_FIGHT_GOD_SQUARE_CHALLENGE_OUT_TIME = 1802;          // 挑战超时
+    EC_FIGHT_GOD_SQUARE_NOT_EXIST_MATCH_PLAYER = 1803;      // 无匹配玩家
+    
+    /********* 好友系统 错误码 ***********/
+    EC_FRIENDS_PLAYER_NOT_EXIST = 1901;                     // 玩家不存在
+    EC_FRIENDS_APPLYED_EXIST = 1902;                        // 已向该好友发出过申请
+    EC_FRIENDS_FRIENDS_EXIST = 1903;                        // 已是好友
+    EC_FRIENDS_APPLYED_FRIENDS_OUT_LIMIT = 1904;            // 对方好友已满
+    EC_FRIENDS_OWN_FRIENDS_OUT_LIMIT = 1905;                // 自己好友已满
+    EC_FRIENDS_NOT_EXIST = 1906;                            // 不存在该好友
+    EC_FRIENDS_TREASURE_REQUEST_OUT_LIMTI = 1907;           // 好友索取宝箱次数超限
+    EC_FRIENDS_TREASURE_REQURESTED = 1908;                  // 已向该好友索取过宝箱
+    EC_FRIENDS_ALREADY_DONATED = 1909;                      // 已赠送
+    EC_FRIENDS_DONATE_OUT_LIMIT = 1910;                     // 赠送好友福利超限
+    EC_FRIENDS_IS_SELF = 1911;                              // 好友申请对象不能是自己
+    /********* 组队系统 错误码 ************/
+    EC_TEAMS_PLAYER_ALREADY_IN_TEAM = 2000;                 // 玩家已在该队伍中
+    EC_TEAMS_PLYAER_ALREADY_IN_OTHER_TEAM = 2001;           // 玩家已在其他队伍中
+    EC_TEAMS_MEMBER_NOT_IN_TEAM = 2002;                     // 成员不存在
+    EC_TEAMS_NOT_SET_DUNGEON_ID = 2003;                     // 未选择关卡
+    EC_TEAMS_NOT_EXIST_TEAM = 2004;                         // 队伍不存在
+    EC_TEAMS_MEMBER_NOT_IN_SCENE = 2005;                    // 队员不在该场景
+    EC_TEAMS_SCENE_NOT_EXIST_DUNGEON_ID = 2006;             // 该场景不存在该副本
+    EC_TEAMS_PLAYER_ALREADY_IN_OTHER_TEAM = 2007;           // 玩家在其他队伍中，不可创建队伍
+    EC_TEAMS_PLAYER_NOT_IN_TEAM_SCENE = 2008;               // 其他场景的队伍，不可加入
+    EC_TEAMS_MEMBERS_NUM_OUT_RANGE = 2009;                  // 队伍已经满员
+    /****** 可领取背包 ********/
+    EC_RECEIVABLE_PACK_ALREADY_PICKED = 2100;               // 礼包已经领取
+    /*******邮件 **********/
+    EC_MAIL_ALREADY_PICKED = 2200;                          // 邮件已领取
+    EC_MAIL_ALREADY_READ = 2201;                            // 邮件已读取
+    EC_HONOUR_SHOP_SCORE_NOT_ENOUGH = 2210;                 // 积分不足，不可购买
+	/*******人物进阶**********/
+	EC_PROSESSION_TRANS_LESS_EQUIP = 2250;                  // 缺少阶级
+
+	/*******密境********/
+	EC_MIJING_COUNT_ERROR = 2300;							// 次数用完或者未到开启时间
+	EC_MIJING_DOING = 2301;									// 重复进入
+	
+	EC_MONTH_CARD_WELFARE_PICKED = 2351;                      // 当天月卡福利已经领取
+	EC_SPIRIT_COLLECT_TIME_ERROR = 2360;                      // 未到体力领取时间
+	EC_SPIRIT_COLLECTED_BY_TIME_PRIOD = 2361;                 // 该时间段体力已领取
+
+	EC_COMBAT_FINISH_DUNGEON_ERROR = 2362;				            // 战斗结束状态错误
+	EC_COMBAT_SWEEP_DUNGEON_VIP_LEVEL_LIMIT = 2364;           // 扫荡所需vip等级不足  
+	  /*********签到*********/
+	EC_CHECK_DAY_ORDER_CHECKED = 2400;                        // 当天已签
+	EC_CHECK_CIENT_TIME_INVALID = 2401;												// 客户端签到时间错误
+
+	EC_PLAYER_CREATE_INDEX_INVALID = 2410;					// 角色创建index非法
+
+	EC_QUERY_PLAYER_DATA_FAILED = 2500;						//查询玩家数据失败
+    EC_COMBAT_VERIFICATION_FAILED = 2501;                   // 战斗数据异常，验证未通过，战斗无效
+
+    /**** 删除角色 *****/
+    EC_DELETE_PYLATER_INVALID_ACOUNTID = 2601;              // 账号id无效
+    EC_DELETE_PYLATER_INVALID_PYLATERID = 2602;              // 角色id无效
+
+	EC_NEST_INDEX_ERROR = 2603;								// 超过龙巢最大编号
+	EC_NEST_RELICS_UID_ERROR= 2604;							// 你没有这个神龙
+	EC_NEST_RELICS_TYPE_ERROR= 2605;						// 这个道具不是神龙
+	EC_NEST_RELICS_REWARD_ERROR= 2606;						// 添加神龙奖励失败
+	EC_NEST_RELICS_CONFIG_ERROR = 2607;						// 找不到神龙奖励配置
+	EC_NEST_RELICS_LEVEL_ERROR = 2608;						// 超过龙巢最大等级
+	EC_NEST_RELICS_LEVELUP_ERROR = 2609;					// 没有足够的元宝升级龙巢
+	EC_NEST_RELICS_OPP_ERROR = 2610;						// 找不到对手
+	EC_NEST_RELICS_SNATCH_COUNT_ERROR = 2611;				// 没有掠夺次数
+	EC_NEST_RELICS_LOCK_ERROR = 2612;						// 龙巢被锁定
+	EC_NEST_RELICS_TRAIN_HAVE_PLAYER_ERROR = 2613;			// 龙巢已经被占用
+	EC_NEST_RELICS_TRAIN_AGAIN_ERROR = 2614;				// 神龙已经在训练
+	EC_NEST_RELICS_SEARCH_PAY_ERROR = 2615;					// 搜索需要的金币不够
+	EC_NEST_RELICS_PROTECTED = 2616;						// 对方神龙保护状态中
+
+	EC_FUSHI_TYPE_ERROR = 2617;	// 符石类型错误
+	EC_FUSHI_UNEQUIP_ERROR = 2618;	// 没有镶嵌的符石
+	EC_FUSHI_EQUIP_RE_ERROR = 2619;	// 重复镶嵌符石
+	EC_FUSHI_EQUIP_NOTFOUND_ERROR = 2620;	// 未找到符石
+	EC_FUSHI_NOTFOUND_ERROR = 2621;	// 未找到符石配置
+	EC_FUSHI_EAT_ERROR = 2622;		// 符石不能超过人物等级
+
+	EC_RELICS_NEED_STRENGTH_ERROR = 2623; //请强化神龙
+	EC_RELICS_NEED_CLASS_ERROR = 2624; //请突破神龙
+	EC_FUSHI_EQUIP_LOCK_ERROR = 2625; //位置被锁定
+	EC_RANDOM_SHOP_ITEM_SALE_OUT = 2640;				// 随机商店物品已售罄
+	
+	EC_ONLINE_PRIZE_PICK_TIME_NOT_REACH = 2700;		          // 未到达礼包领取时间
+	EC_ONLINE_PRIZE_PICK_NOT_EXIST_RECEIVABLE_PACK = 2701;	// 已无可领取的在线礼包
+  
+  EC_INVALID_RECEIVABLE_PACK = 2702;	// 礼包无效
+  
+  EC_SERVER_UNOPEN = 2703;            	// 服务器未开放
+  EC_LADDER_UNOPEN = 2704;            	// 天梯未开放
+  
+  EC_CDK_ERROR_HTTP_REQUEST = 2705;	    // 礼包码请求无效
+  EC_CDK_CODE_ERROR = 2706;            	// 礼包码状态错误
+
+  EC_MALL_VIP_ERROR = 2707;				// VIP等级没到
+  EC_MALL_COUNT_ERROR = 2708;			// 次数超过
+  EC_MALL_GLOBAL_COUNT_ERROR = 2709;	// 服务器次数超过
+  EC_MALL_NOT_FOUND = 2710;				// 未找到道具
+  EC_MALL_ITEM_NOT_IN_TIME = 2711;		// 未在买道具时间内
+
+  EC_QUESTION_ERROR = 2720;				// 题目不匹配
+  EC_QUESTION_TIME_ERROR = 2721;		// 答题已经结束
+  EC_QUESTION_LENGTH_ERROR = 2722;		// 超过最大长度
+  EC_QUESTION_NOT_BEGIN_ERROR = 2723;	// 答题还没开始
+  
+  EC_VIP_RESTROACTIVE_AWARD_UNRECEIVABLE = 2724;	// 签到VIP 补领，状态不可领取
+  EC_VIP_RESTROACTIVE_AWARD_VIP_UNREACH = 2725;	// 签到VIP 补领，vip等级未达到   
+  EC_VIP_RESTROACTIVE_AWARD_VIP_DATAT_ERROR = 2726;	// 签到VIP 补领，VIP 数据错误
+  EC_VIP_RESTROACTIVE_AWARD_RATE_ERROR = 2727;	// 签到VIP 补领，倍率配置错误
+  
+  EC_CHAPTER_BOX_UNOPEN = 2728;	// 章节宝箱未开启
+  EC_CHAPTER_BOX_RECEIVED = 2729;	// 章节宝箱已领取
+  /******************* 运营活动 **************************/
+  
+  EC_ACTIVITY_NOT_ACCEPTABLE = 3101;          // 活动不可接受
+  EC_ACTIVITY_AWARD_NOT_ACCEPTABLE = 3102;    // 活动奖励不可接受
+  EC_AWARD_UNFINISHED = 3103;                 // 奖励未完成
+  EC_ERROR_AWARD_TIME = 3104;                 // 错误活动时间
+  EC_EXCEEDED_RECV_COUNT = 3105;              // 领奖次数达到上限
+  EC_AWARD_RECEIVED = 3106;                   // 奖励已领取
+  EC_GVR_HTTP_REQUEST_JSON_ERROR = 3500;	    //服务器返回数据格式错误
+  EC_GVR_CODE_ERROR = 3501;            			// 礼包码状态错误
+
+  /******************* 组队 **************************/
+  EC_TEAM_NOT_OPEN_TIME = 3201;        // 组队副本不是开放时间
+  EC_TEAM_PLAYER_OFFLINE = 3202;       // 玩家断线
+  EC_TEAM_INVITER_LEAVE = 3203;        // 邀请者离开
+  EC_TEAM_MATCH_FAILD = 3204;          // 匹配玩家失败
+  
+  /******************* 多人PVP **************************/
+  EC_MULTI_PVP_LEVEL_LIMIT = 3301;    // 玩家等级不足
+  EC_MULTI_PVP_TEAMMATE_COUNT_REACH_MAX = 3302; // 队友限制次数用光
+}
+
